@@ -1,0 +1,60 @@
+/* Lógico_2: */
+
+CREATE TABLE Livro (
+    ISBN INT PRIMARY KEY,
+    Titulo VARCHAR(100),
+    Ano INT
+);
+
+CREATE TABLE Autor (
+    ID_Autor INT PRIMARY KEY,
+    Nome_Autor VARCHAR(100),
+    Nacionalidade VARCHAR(50)
+);
+
+CREATE TABLE Editora (
+    ID_Editora INT PRIMARY KEY,
+    Nome_Editora VARCHAR(100),
+    fk_Livro_ISBN INT
+);
+
+CREATE TABLE Categorias (
+    ID_Categoria INT PRIMARY KEY,
+    Nome_Categoria VARCHAR(100),
+    Descricao_Categoria VARCHAR(1000)
+);
+
+CREATE TABLE Escreve (
+    fk_Autor_ID_Autor INT,
+    fk_Livro_ISBN INT
+);
+
+CREATE TABLE pertenceCategoria (
+    fk_Livro_ISBN INT,
+    fk_Categorias_ID_Categoria INT
+);
+ 
+ALTER TABLE Editora ADD CONSTRAINT FK_Editora_2
+    FOREIGN KEY (fk_Livro_ISBN)
+    REFERENCES Livro (ISBN)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Escreve ADD CONSTRAINT FK_Escreve_1
+    FOREIGN KEY (fk_Autor_ID_Autor)
+    REFERENCES Autor (ID_Autor)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Escreve ADD CONSTRAINT FK_Escreve_2
+    FOREIGN KEY (fk_Livro_ISBN)
+    REFERENCES Livro (ISBN)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE pertenceCategoria ADD CONSTRAINT FK_pertenceCategoria_1
+    FOREIGN KEY (fk_Livro_ISBN)
+    REFERENCES Livro (ISBN)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE pertenceCategoria ADD CONSTRAINT FK_pertenceCategoria_2
+    FOREIGN KEY (fk_Categorias_ID_Categoria)
+    REFERENCES Categorias (ID_Categoria)
+    ON DELETE SET NULL;

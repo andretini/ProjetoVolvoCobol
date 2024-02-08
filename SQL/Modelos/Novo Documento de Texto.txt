@@ -1,0 +1,44 @@
+/* Lógico_1: */
+
+CREATE TABLE Produto (
+    Codigo INT PRIMARY KEY,
+    Nome_Produto VARCHAR(100),
+    Categoria VARCHAR(100),
+    Preco FLOAT
+);
+
+CREATE TABLE Cliente (
+    ID_Cliente INT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Endereco VARCHAR(200),
+    Telefone VARCHAR(16),
+    Status VARCHAR(3),
+    Limite_Credito FLOAT
+);
+
+CREATE TABLE Pedido (
+    ID_Pedido INT PRIMARY KEY,
+    Data_Pedido DATE,
+    Quantidade INT,
+    fk_Cliente_ID_Cliente INT
+);
+
+CREATE TABLE Lista_Produtos (
+    fk_Produto_Codigo INT,
+    fk_Pedido_ID_Pedido INT
+);
+ 
+ALTER TABLE Pedido ADD CONSTRAINT FK_Pedido_2
+    FOREIGN KEY (fk_Cliente_ID_Cliente)
+    REFERENCES Cliente (ID_Cliente)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Lista_Produtos ADD CONSTRAINT FK_Lista_Produtos_1
+    FOREIGN KEY (fk_Produto_Codigo)
+    REFERENCES Produto (Codigo)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Lista_Produtos ADD CONSTRAINT FK_Lista_Produtos_2
+    FOREIGN KEY (fk_Pedido_ID_Pedido)
+    REFERENCES Pedido (ID_Pedido)
+    ON DELETE SET NULL;
